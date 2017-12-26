@@ -1,0 +1,12 @@
+## 代码阅读顺序
+- 1.k-近邻算法
+	- training/kNearestNeighbor/KNN.py
+- 2.决策树
+	- training/decisionTree/trees.py
+- 3.基于概率论的分类方法:朴素贝叶斯
+	- training/bayes/*
+- 4.Logistic回归
+	- training/logistic/*
+- 5.支持向量机(svm)
+	- training/svm/*
+- 7.利用AdaBoost元算法提高分类性能
