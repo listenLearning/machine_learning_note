@@ -1,5 +1,4 @@
 ## 学习顺序
-- numpy环境安装配置
 - numpy ndarray对象
 - numpy数据类型
 - numpy数组属性
