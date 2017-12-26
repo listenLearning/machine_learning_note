@@ -1,4 +1,6 @@
 ## 代码阅读顺序
+- 0.numpy基础入门
+	- training/numpy_common_api/*
 - 1.k-近邻算法
 	- training/kNearestNeighbor/KNN.py
 - 2.决策树
