@@ -1,0 +1,37 @@
+## 实数集
+- 区间（a,b) [a,b] (a,b][a,b)
+- 领域 $ \bigcup(a,\varepsilon)={x:a-\varepsilon<x<a+\varepsilon} $ $\bigcup_0(a,\varepsilon)={x:a-\varepsilon<x<a+\varepsilon 且 x \neq a } $
+- 数轴：实数集上的数和数轴上的店一一对应
+  - 1.有理数虽然是实数，但是并不会布满数轴
+  - 2.有理数在数轴以稠密的形式存在：\forall)(a,b)∩Q\neq\emptyset
+- 完备性的刻画
+  - 1.在实数域中,任意一个单调有界序列必然有极限
+  - 2.确界存在定理
+- 上界：集合$E\subseteq R$,并且$E\neq \emptyset$,如果存在$M\in R$,使得对于$\forall x \in E$,有$x \leq M$,则称E有上界,并且说M是E的一个上界
+- 下界
+- 上确界：设$E\subseteq R$是一个非空数集,如果$M\in R$满足
+  - 1.M是E的一个上界
+  - 2.对$\forall\varepsilon > 0$,存在$x' \in E$使得$x' > M\varepsilon$,则称M为E的上确界,记$M=supE$
+- 下确界: $M=infE$
+- 确界存在定理
+  - 非空有上界的实数集必然有上确界,飞控有下界的实数集必然有下确界
+- 等势: 集合A到集合B存在双射,称A与B等势,记为$A\approx B$。特别的,称与自然数集N等势的集合为可列集
+- $\mathbb Z\approx \mathbb N$
+- $\mathbb N\approx \mathbb Q$
+- $(0,1)\approx \mathbb R$
+- (康托定理)$\mathbb N \not\approx \mathbb R$
+## 常用不等式
+- 三角不等式	$\mid x+y \mid \leq \mid x \mid + \mid y \mid$
+- 伯努利(Bernoulli)不等式
+  - 对于任意的$x \geq -1$和任意的正整数n，有：
+    $(1+x)^n \geq 1+nx$
+- 算数-几何平均值不等式
+  - 对于任意n个非负实数$x_1,x_2,...x_n$有
+    $$\dfrac{x_1+x_2+...+x_n}{n} \geq \sqrt[n]{x_1x_2..x_n}$$
+## 映射
+- 映射: 设A,B是两个非空集合,如果存在一个法则f,使得对A中的每个元素a,按法则f,在B中有唯一确定的元素b与之对应,则称f为从A到B的映射,记作
+  $f:A\rightarrow B$
+  其中,b称为元素a在映射f下的象,记作：b=f(a);a称作b关于映射f的原象。也称为原象集,B为象集
+- 单射(嵌入映射)
+- 满射(到上映射)
+- 双射(一一映射)
