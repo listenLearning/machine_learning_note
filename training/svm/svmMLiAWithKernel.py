@@ -210,7 +210,7 @@ def innerL(i, oS):
             H = min(oS.C, oS.alphas[j] + oS.alphas[j])
         if L == H: print('L==H');return 0
         # eta是alphas[j]的最优修改量，如果eta==0，需要退出for循环的当前迭代过程
-        eta = 2.0 * oS.K[i, j] * oS.K[i, i].T - oS.K[j, j]
+        eta = 2.0 * oS.K[i, j] * oS.K[i, i] - oS.K[j, j]
         if eta >= 0: print('eta>=0');return 0
         # 计算出一个新的alphas[j]值并使用辅助函数，以及L和H对其进行调整
         oS.alphas[j] -= oS.labelMat[j] * (Ei - Ej) / eta
