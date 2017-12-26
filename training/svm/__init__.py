@@ -2,7 +2,7 @@
 __coding__ = "utf-8"
 __author__ = " Ng WaiMing "
 
-from training.svm import svmMLiA, svmMLiAWithKernel
+from training.svm import svmMLiA, svmMLiAWithKernel, svmMliADigitalRecognition
 from numpy import *
 
 if __name__ == "__main__":
@@ -12,4 +12,5 @@ if __name__ == "__main__":
     # # print(alphas[alphas > 0], '\n')
     # w = svmMLiA.calcWs(alphas, dataArr, labelArr)
     # print('\n', 'ws:', w)
-    svmMLiAWithKernel.testRbf()
+    # svmMLiAWithKernel.testRbf()
+    svmMliADigitalRecognition.testDigits()
