@@ -1,0 +1,26 @@
+## 学习顺序
+- numpy环境安装配置
+- numpy ndarray对象
+- numpy数据类型
+- numpy数组属性
+- numpy数组创建例程
+- numpy来自现有数据的数组
+- numpy来自数值范围的数组
+- numpy切片和索引
+- numpy高级索引
+- numpy广播
+- numpy在数组上的迭代
+- numpy数组操作
+- numpy位操作
+- numpy字符串函数
+- numpy数学算数函数
+- numpy算术运算
+- numpy统计函数
+- numpy排序、搜索和计数函数
+- numpy字节交换
+- numpy副本和视图
+- numpy矩阵库
+- numpy线性代数
+- numpy matplotlib库
+- numpy使用matplotlib绘制直方图
+- numpy io文件操作
