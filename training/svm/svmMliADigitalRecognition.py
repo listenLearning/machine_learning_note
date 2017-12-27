@@ -155,7 +155,6 @@ def smoP(dataMatIn, classLabels, C, toler, maxIter, kTup=('lin', 0)):
     :return:
     '''
     import time
-    time1 = time.time()
     # 构建一个数据结构来容纳所有数据
     oS = optStruct(mat(dataMatIn), mat(classLabels).T, C, toler, kTup)
     # 对控制函数退出的变量进行初始化
@@ -172,7 +171,7 @@ def smoP(dataMatIn, classLabels, C, toler, maxIter, kTup=('lin', 0)):
                 # 调用innerL函数来选择第二个alpha,并在可能时对其进行优化处理
                 # 如果有任意一对alpha值发生改变，返回1
                 alphaPairsChanged += innerL(i, oS)
-            print('fullSet,iter:%d, i:%d, pairs changed: %d' % (iter, i, alphaPairsChanged))
+                print('fullSet,iter:%d, i:%d, pairs changed: %d' % (iter, i, alphaPairsChanged))
             iter += 1
         else:
             nonBoundIs = nonzero((oS.alphas.A > 0) * (oS.alphas.A < C))[0]
@@ -188,7 +187,6 @@ def smoP(dataMatIn, classLabels, C, toler, maxIter, kTup=('lin', 0)):
         elif (alphaPairsChanged == 0):
             entireSet = True
         print('iteration number: %d' % iter)
-        print('times:', time.time() - time1)
     # 返回常数b和alpha值
     return oS.b, oS.alphas
 
@@ -204,8 +202,8 @@ def innerL(i, oS):
     Ei = calcEk(oS, i)
     # 不管是正间隔还是副间隔都会被测试,同时也要检查alpha值,以保证其不能等于0或C
     # 由于后面alpha值小于0或大于C时将被调整为0或C,所以一旦他们等于这两个值的话,就表示他们已经在‘边界’上了,不能再进行优化(减小或增大)了
-    if ((oS.labelMat[i] * Ei < -oS.tol) and (oS.alphas[i] < oS.C)) or \
-            ((oS.labelMat[i] * Ei > oS.tol) and (oS.alphas[i] > 0)):
+    if ((oS.labelMat[i] * Ei < -oS.tol) and (oS.alphas[i] < oS.C)) or (
+            (oS.labelMat[i] * Ei > oS.tol) and (oS.alphas[i] > 0)):
         # 选择最大的误差Ej对应的随机数进行优化
         j, Ej = selectJ(i, oS, Ei)
         alphaIold = oS.alphas[i].copy()
@@ -216,11 +214,11 @@ def innerL(i, oS):
             H = min(oS.C, oS.C + oS.alphas[j] - oS.alphas[i])
         else:
             L = max(0, oS.alphas[j] + oS.alphas[i] - oS.C)
-            H = min(oS.C, oS.alphas[j] + oS.alphas[j])
-        if L == H: print('L==H');return 0
+            H = min(oS.C, oS.alphas[j] + oS.alphas[i])
+        if L == H: print("L==H"); return 0
         # eta是alphas[j]的最优修改量，如果eta==0，需要退出for循环的当前迭代过程
-        eta = 2.0 * oS.K[i, j] * oS.K[i, i].T - oS.K[j, j]
-        if eta >= 0: print('eta>=0');return 0
+        eta = 2.0 * oS.K[i, j] - oS.K[i, i] - oS.K[j, j]
+        if eta >= 0: print("eta>=0"); return 0
         # 计算出一个新的alphas[j]值并使用辅助函数，以及L和H对其进行调整
         oS.alphas[j] -= oS.labelMat[j] * (Ei - Ej) / eta
         oS.alphas[j] = clipAlpha(oS.alphas[j], H, L)
