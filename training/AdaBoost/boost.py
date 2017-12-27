@@ -3,6 +3,7 @@ __coding__ = "utf-8"
 __author__ = " Ng WaiMing "
 
 from numpy import *
+from matplotlib import pyplot as plt
 
 
 def stumpClassify(dataMatrix, dimen, threshVal, threshIneq):
@@ -121,7 +122,7 @@ def adaBoostTrainDS(dataArr, classLabels, numIt=40):
         print('total error: ', errorRate, '\n')
         # 如果训练错误率为0,就提前结束循环
         if errorRate == 0.0: break
-    return weakClassArr
+    return weakClassArr, aggClassEst
 
 
 def adaClassify(datToClass, classifierArr):
@@ -144,3 +145,32 @@ def adaClassify(datToClass, classifierArr):
         aggClassEst += classifierArr[i]['alpha'] * classEst
         print('aggClassEst: ', aggClassEst)
     return sign(aggClassEst)
+
+
+def plotROC(predStrengths, classLabels):
+    cur = (1.0, 1.0)
+    ySum = 0.0
+    numPosClas = sum(array(classLabels) == 1.0)
+    yStep = 1 / float(numPosClas)
+    xStep = 1 / float(len(classLabels) - numPosClas)
+    sortedIndicies = predStrengths.argsort()
+    fig = plt.figure()
+    fig.clf()
+    ax = plt.subplot(111)
+    for index in sortedIndicies.tolist()[0]:
+        if classLabels[index] == 1.0:
+            delX = 0
+            delY = yStep
+        else:
+            delX = xStep
+            delY = 0
+            ySum += cur[1]
+        ax.plot([cur[0], cur[0] - delX], [cur[1], cur[1] - delY], c='b')
+        cur = (cur[0] - delX, cur[1] - delY)
+    ax.plot([0, 1], [0, 1], 'b--')
+    plt.xlabel('False Postive Rare')
+    plt.ylabel('True Postive Rare')
+    plt.title('ROC curve for AdaBoost Horse Colic Detection System')
+    ax.axis([0, 1, 0, 1])
+    plt.show()
+    print('the Area Under the Curve is: ', ySum * xStep)
