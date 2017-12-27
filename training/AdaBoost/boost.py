@@ -122,3 +122,25 @@ def adaBoostTrainDS(dataArr, classLabels, numIt=40):
         # 如果训练错误率为0,就提前结束循环
         if errorRate == 0.0: break
     return weakClassArr
+
+
+def adaClassify(datToClass, classifierArr):
+    '''
+    AdaBoost分类函数
+    :param datToClass: 一个或多个待分类样例
+    :param classifierArr: 多个弱分类器
+    :return:
+    '''
+    dataMatrix = mat(datToClass)
+    m, n = shape(dataMatrix)
+    # 记录每个数据点的类别估计累计值
+    aggClassEst = mat(zeros((m, 1)))
+    # 遍历classifierArr中的所有弱分类器
+    for i in range(len(classifierArr)):
+        # 调用stumpClassify对每个分类器得到一个类别估计值
+        classEst = stumpClassify(dataMatrix, classifierArr[i]['dim'], classifierArr[i]['thresh'],
+                                 classifierArr[i]['ineq'])
+        # 输出的类别估计值乘上该单层决策树的alpha权重然后累加到aggClassEst
+        aggClassEst += classifierArr[i]['alpha'] * classEst
+        print('aggClassEst: ', aggClassEst)
+    return sign(aggClassEst)
