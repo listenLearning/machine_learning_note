@@ -18,7 +18,7 @@ def loadSimpData():
 def loadDataSet(fileName):
     '''
     自适应数据集加载函数
-    :param fileName:
+    :param fileName: 文件地址
     :return:
     '''
     numFeat = len(open(fileName).readline().split('\t'))
