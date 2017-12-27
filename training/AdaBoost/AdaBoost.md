@@ -60,3 +60,10 @@ $\alpha=\dfrac{1}{2}\ln\left(\frac{1-\epsilon}{\epsilon}\right)$
 4. 训练算法: 在数据上,利用adaboostTrainDS()函数训练处一系列的分类器
 5. 测试算法: 我们拥有两个数据集.在不采用随机抽样的方法下,我们就会对AdaBoost和Logistic回归的结果进行完全对等的比较
 5. 使用算法: 观察该例子上的错误率
+### 正确率、召回率
+TP:真正例
+FP:伪正例
+FN:伪反例
+TN:真反例
+**正确率:** $\frac{TP}{(TP+FP)}$
+**召回率:**	$\frac{TP}{(TP+FN)}$
