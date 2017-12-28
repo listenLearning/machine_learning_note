@@ -4,6 +4,7 @@ __author__ = " Ng WaiMing "
 
 from training.regression import regression as re
 from training.regression import locallyWeightedLinearRegression as lo
+from training.regression import ridgeRegression as ri
 from numpy import *
 
 
@@ -20,9 +21,11 @@ if __name__ == "__main__":
     # # print(yHat)
     # lo.plotLwlr(array(xArr), array(yArr), array(yHat))
     abX, abY = re.loadDataSet('../../data/regression/abalone.txt')
-    yHat01 = lo.lwlrTest(abX[0:99], abX[0:99], abY[0:99], 0.1)
-    yHat1 = lo.lwlrTest(abX[0:99], abX[0:99], abY[0:99], 1)
-    yHat10 = lo.lwlrTest(abX[0:99], abX[0:99], abY[0:99], 10)
-    print('0.1: ',rssError(abY[0:99], yHat01.transpose()))
-    print('1: ', rssError(abY[0:99], yHat1.transpose()))
-    print('10: ', rssError(abY[0:99], yHat10.transpose()))
+    # yHat01 = lo.lwlrTest(abX[0:99], abX[0:99], abY[0:99], 0.1)
+    # yHat1 = lo.lwlrTest(abX[0:99], abX[0:99], abY[0:99], 1)
+    # yHat10 = lo.lwlrTest(abX[0:99], abX[0:99], abY[0:99], 10)
+    # print('0.1: ',rssError(abY[0:99], yHat01.transpose()))
+    # print('1: ', rssError(abY[0:99], yHat1.transpose()))
+    # print('10: ', rssError(abY[0:99], yHat10.transpose()))
+    ridgeWeights = ri.ridgeTest(abX, abY)
+    ri.ridgePlot(ridgeWeights)
