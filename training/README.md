@@ -12,3 +12,6 @@
 - 5.支持向量机(svm)
 	- training/svm/*
 - 7.利用AdaBoost元算法提高分类性能
+    - training/AdaBoost/*
+- 8.线性回归,局部加权线性回归,岭回归和逐步线性回归
+    - training/regression/*
