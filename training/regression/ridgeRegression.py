@@ -3,10 +3,11 @@ __coding__ = "utf-8"
 __author__ = " Ng WaiMing "
 
 from numpy import *
+from matplotlib import pyplot as plt
 
 
 def ridgeRegress(xMat, yMat, lam=0.2):
-    xTx = xMat * xMat.T
+    xTx = xMat.T * xMat
     denom = xTx * eye(shape(xMat)[1]) * lam
     if linalg.det(denom) == 0.0:
         print('This matrix is singular,cannot do inverse')
@@ -29,3 +30,10 @@ def ridgeTest(xArr, yArr):
         ws = ridgeRegress(xMat, yMat, exp(i - 10))
         wMat[i, :] = ws.T
     return wMat
+
+
+def ridgePlot(ridgeWeights):
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(ridgeWeights)
+    plt.show()
