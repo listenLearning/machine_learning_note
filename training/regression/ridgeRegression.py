@@ -49,6 +49,7 @@ def ridgeTest(xArr, yArr):
     for i in range(numTestPts):
         # 需要注意的是,这里的lambda应以指数级变化,
         # 这样可以看出lambda在取非常小的值时和取非常大的值时分别对结果造成的影响
+        # exp() 返回 e^x
         ws = ridgeRegress(xMat, yMat, exp(i - 10))
         # 将所有的回归系数输出到一个矩阵
         wMat[i, :] = ws.T
