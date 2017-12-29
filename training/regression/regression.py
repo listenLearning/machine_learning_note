@@ -6,6 +6,16 @@ from numpy import *
 from matplotlib import pyplot as plt
 
 
+def rssError(yArr, yHatArr):
+    '''
+    获取平方误差值
+    :param yArr:
+    :param yHatArr:
+    :return:
+    '''
+    return ((yArr - yHatArr) ** 2).sum()
+
+
 def loadDataSet(fileName):
     '''
     数据导入函数
