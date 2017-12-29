@@ -17,7 +17,7 @@ def ridgeRegress(xMat, yMat, lam=0.2):
     # 构造X^TX矩阵
     xTx = xMat.T * xMat
     # 使用lambda乘以单位矩阵(可以调用eye来生成)
-    denom = xTx * eye(shape(xMat)[1]) * lam
+    denom = xTx + eye(shape(xMat)[1]) * lam
     # 判断X^TX的行列式是否为零,如果为零,会导致计算逆矩阵的时候出现错误,直接返回
     if linalg.det(denom) == 0.0:
         print('This matrix is singular,cannot do inverse')
@@ -36,7 +36,7 @@ def ridgeTest(xArr, yArr):
     :return:
     '''
     xMat = mat(xArr)
-    yMat = mat(yArr).transpose()
+    yMat = mat(yArr).T
     yMean = mean(yMat, 0)
     yMat = yMat - yMean
     xMeans = mean(xMat, 0)
