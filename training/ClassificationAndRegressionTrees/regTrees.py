@@ -7,6 +7,13 @@ from numpy import *
 
 class treeNode():
     def __init__(self, feat, val, right, left):
+        '''
+        创建树节点
+        :param feat:
+        :param val:
+        :param right:
+        :param left:
+        '''
         featureToSplitOn = feat
         valueOfSplit = val
         rightBranch = right
@@ -49,6 +56,11 @@ def chooseBestSplit(dataSet, leafType=regLeaf, errType=regErr, ops=(1, 4)):
 
 
 def loadDataSet(fileName):
+    '''
+    数据导入函数
+    :param fileName:
+    :return:
+    '''
     dataMat = []
     fr = open(fileName)
     for line in fr.readlines():
@@ -59,14 +71,36 @@ def loadDataSet(fileName):
 
 
 def binSplitDataSet(dataSet, feature, value):
+    '''
+    在给定特征和特征值的情况下,
+    本函数将通过数据过滤的方式将数据集合切分得到两个子集并返回
+    :param dataSet: 数据集合
+    :param feature: 待切分的特征
+    :param value: 该特征的某个特征值
+    :return:
+    '''
     mat0 = dataSet[nonzero(dataSet[:, feature] > value)[0], :][0]
     mat1 = dataSet[nonzero(dataSet[:, feature] <= value)[0], :][0]
     return mat0, mat1
 
 
 def createTree(dataSet, leafType=regLeaf, errType=regErr, ops=(1, 4)):
+    '''
+    创建树
+    :param dataSet: 数据集
+    :param leafType: 建立叶节点的函数
+    :param errType: 误差计算函数
+    :param ops: 包含树构建所需其它参数的元组
+    :return:
+    '''
+    # 调用chooseBestSplit函数,尝试将数据集分成两个部分,
     feat, val = chooseBestSplit(dataSet, leafType, errType, ops)
+    # 如果满足停止条件,chooseBestSplit函数将返回None和某类模型的值
+    # 如果构建的是回归树,该模型是一个常数
+    # 如果是模型树,其模型是一个线性方程
     if feat == None: return val
+    # 如果不满足停止条件,chooseBestSplit函数将创建一个新的数据字典并将数据集分成两份
+    # 在这两份数据集上分别继续递归调用createTree函数
     retTree = {}
     retTree['spInd'] = feat
     retTree['spVal'] = val
