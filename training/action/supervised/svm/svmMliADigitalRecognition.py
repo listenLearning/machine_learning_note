@@ -313,7 +313,7 @@ def loadImages(dirName):
 
 
 def testDigits(kTup=('rbf', 10)):
-    dataArr, labelArr = loadImages('../../data/digits/trainingDigits')
+    dataArr, labelArr = loadImages('../../../../data/digits/trainingDigits')
     b, alphas = smoP(dataArr, labelArr, 200, 0.0001, 10000, kTup)
     dataMat = mat(dataArr)
     labelMat = mat(labelArr).T
@@ -328,7 +328,7 @@ def testDigits(kTup=('rbf', 10)):
         predict = kernelEval.T * multiply(labelSV, alphas[svInd]) + b
         if sign(predict) != sign(labelArr[i]): errorCount += 1
     print('the training error rate is :%f' % float(errorCount / m))
-    dataArr, labelArr = loadImages('../../data/digits/testDigits')
+    dataArr, labelArr = loadImages('../../../../data/digits/testDigits')
     errorCount = 0
     dataMat = mat(dataArr)
     m, n = shape(dataMat)
