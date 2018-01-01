@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 __coding__ = "utf-8"
 __author__ = " Ng WaiMing "
-from training.AdaBoost import adaboost, boost
+from training.action.supervised.AdaBoost import adaboost, boost
 from numpy import *
 
 if __name__ == "__main__":
@@ -9,7 +9,7 @@ if __name__ == "__main__":
     D = mat(ones((5, 1)) / 5)
     # print(boost.buildStump(dataArr, classArr, D))
     # print(boost.adaBoostTrainDS(dataArr, classArr, 9))
-    trainDataArr, trainClassArr = adaboost.loadDataSet('../../data/adaBoost/horseColicTraining2.txt')
+    trainDataArr, trainClassArr = adaboost.loadDataSet('../../../../data/adaBoost/horseColicTraining2.txt')
     classifierArray, aggClassEst = boost.adaBoostTrainDS(trainDataArr, trainClassArr, 10)
     # testArr, testLabelArr = adaboost.loadDataSet('../../data/adaBoost/horseColicTest2.txt')
     # prediction10 = boost.adaClassify(testArr, classifierArray)
