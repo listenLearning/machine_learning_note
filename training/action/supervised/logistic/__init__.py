@@ -2,8 +2,7 @@
 __coding__ = "utf-8"
 __author__ = " Ng WaiMing "
 
-from training.logistic import logRegres
-from numpy import *
+from training.action.supervised.logistic import logRegres
 
 if __name__ == "__main__":
     # Sigmoid函数 \sigma(w^Tx)=\frac{1}{1+e^-z}
