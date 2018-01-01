@@ -172,11 +172,11 @@ def spamTest():
     fullText = []
     for i in range(1, 26):
         # 读取spam与ham文件夹下的文本文件，并将其解析为词列表
-        wordList = textParse(open('../../data/email/spam/%d.txt' % i).read())
+        wordList = textParse(open('../../../../data/email/spam/%d.txt' % i).read())
         docList.append(wordList)
         fullText.extend(wordList)
         classList.append(1)
-        wordList = textParse(open('../../data/email/ham/%d.txt' % i).read())
+        wordList = textParse(open('../../../../data/email/ham/%d.txt' % i).read())
         docList.append(wordList)
         fullText.extend(wordList)
         classList.append(0)
