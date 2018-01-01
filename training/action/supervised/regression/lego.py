@@ -6,8 +6,8 @@ from time import sleep
 import json
 import urllib3
 from numpy import *
-from training.regression import ridgeRegression as rr
-from training.regression import regression as re
+from training.action.regression import ridgeRegression as rr
+from training.action.regression import regression as re
 
 
 def searchForSet(retX, retY, setNum, yr, numPce, origPrc):
