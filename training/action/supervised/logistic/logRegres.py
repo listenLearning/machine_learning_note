@@ -14,7 +14,7 @@ def loadDataSet():
     '''
     dataMat = []
     labelMat = []
-    fr = open('../../data/logistic/testSet.txt')
+    fr = open('../../../../data/logistic/testSet.txt')
     for line in fr.readlines():
         lineArr = line.strip().split("\t")
         dataMat.append([1.0, float(lineArr[0]), float(lineArr[1])])
@@ -118,8 +118,8 @@ def colicTest():
     '''
     # 导入数据集,数据的最后一列是类别标签
     # 类别标签分别是:'未能存活'，仍存活'
-    frTrain = open('../../data/logistic/horseColicTraining.txt')
-    frTest = open('../../data/logistic/horseColicTest.txt')
+    frTrain = open('../../../../data/logistic/horseColicTraining.txt')
+    frTest = open('../../../../data/logistic/horseColicTest.txt')
     trainingSet = []
     trainingLabels = []
     for line in frTrain.readlines():
