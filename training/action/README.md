@@ -10,10 +10,10 @@
 	    - training/action/supervised/logistic/*
     - 5.支持向量机(svm)
 	    - training/action/supervised/svm/*
-    - 7.利用AdaBoost元算法提高分类性能
+    - 6.利用AdaBoost元算法提高分类性能
         - training/action/supervised/AdaBoost/*
-    - 8.线性回归,局部加权线性回归,岭回归和逐步线性回归
+    - 7.线性回归,局部加权线性回归,岭回归和逐步线性回归
         - training/action/supervised/regression/*
-    - 9.树回归
+    - 8.树回归
         - training/action/supervised/regression
 - 无监督学习
