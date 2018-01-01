@@ -210,7 +210,7 @@ if __name__ == "__main__":
     # dataSet, labels = createDataSet()
     # # print(calcShannonEnt(dataSet))
     # print(splitDataSet(dataSet, 0, 0))
-    fr = open('../../data/decisionTree/lenses.txt')
+    fr = open('../../../../data/decisionTree/lenses.txt')
     lenses = [inst.strip().split('\t') for inst in fr.readlines()]
     lensesLabels = ['age', 'prescript', 'astigmatic', 'tearRate']
     lensesTree = createTree(lenses, lensesLabels)
