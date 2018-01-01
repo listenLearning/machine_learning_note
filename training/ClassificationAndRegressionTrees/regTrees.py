@@ -145,3 +145,164 @@ def createTree(dataSet, leafType=regLeaf, errType=regErr, ops=(1, 4)):
     retTree['left'] = createTree(lSet, leafType, errType, ops)
     retTree['right'] = createTree(rSet, leafType, errType, ops)
     return retTree
+
+
+def isTree(obj):
+    '''
+    用于测试输入变量是否是一棵树,返回布尔类型的结果.
+    换句话说,本函数用于判断当前处理的节点是否是叶节点
+    :param obj:
+    :return:
+    '''
+    return (type(obj).__name__ == 'dict')
+
+
+def getMean(tree):
+    '''
+    本函数是一个递归函数,从上往下遍历树知道叶节点位置
+    如果找到两个叶节点,则计算他们的平均值
+    本函数对数进行塌陷处理(即返回树平均值)
+    :param tree:
+    :return:
+    '''
+    if isTree(tree['right']): tree['right'] = getMean(tree['right'])
+    if isTree(tree['left']): tree['left'] = getMean(tree['left'])
+    return (tree['left'] + tree['right']) / 2.0
+
+
+def prune(tree, testData):
+    '''
+    回归树剪枝函数
+    :param tree: 待剪枝的树
+    :param testData: 剪枝所需的测试数据
+    :return:
+    '''
+    # 判断测试集是否为空,如果非空,就反复递归调用函数prune对测试数据进行切分
+    if shape(testData)[0] == 0: return getMean(tree)
+    # 判断当前数据的类型,如果是字典类型,就将测试数据集进行切分
+    if (isTree(tree['right'])) or (isTree(tree['left'])):
+        lSet, rSet = binSplitDataSet(testData, tree['spInd'], tree['spVal'])
+    # 将测试数据集按照训练完成的拆分好,对应的值放到对应的节点
+    # 如果左边的分支是字典,就传入左边的数据集和左边的分支,进行递归
+    if isTree(tree['left']): tree['left'] = prune(tree['left'], lSet)
+    if isTree(tree['right']): tree['right'] = prune(tree['right'], rSet)
+    # 如果左边和右边的分支都不不是字典类型,即左右两边都是叶节点,而不是子树,那么分割测试数据集
+    if not isTree(tree['left']) and not isTree(tree['right']):
+        lSet, rSet = binSplitDataSet(testData, tree['spInd'], tree['spVal'])
+        # 计算一下总方差和该结果集的本身不分枝的总方差比较
+        errorNoMerge = sum(power(lSet[:, -1] - tree['left'], 2)) + \
+                       sum(power(rSet[:, -1] - tree['right'], 2))
+        treeMean = (tree['left'] + tree['right']) / 2.0
+        errorMerge = sum(power(testData[:, -1] - treeMean, 2))
+        # 如果 合并的总方差 < 不合并的总方差，那么就进行合并
+        if errorMerge < errorNoMerge:
+            print('merging')
+            return treeMean
+        else:
+            return tree
+    else:
+        return tree
+
+
+def linearSolve(dataSet):
+    '''
+    将数据集格式化成目标变量Y和自变量X,X和Y用于执行简单的线性回归
+    :param dataSet:
+    :return:
+    '''
+    m, n = shape(dataSet)
+    X = mat(ones((m, n)))
+    Y = mat(ones((m, 1)))
+    X[:, 1:n] = dataSet[:, 0:n - 1]
+    Y = dataSet[:, -1]
+    xTx = X.T * X
+    # 判断X^TX的行列式是否为零,如果为零,会导致计算逆矩阵的时候出现错误,直接返回
+    if linalg.det(xTx) == 0.0:
+        raise NameError('This matrix is singular,cannot do inverse,try increasing the second vale of ops')
+    # 获取当前可以估计出的w最优解
+    ws = xTx.I * (X.T * Y)
+    return ws, X, Y
+
+
+def modelLeaf(dataSet):
+    '''
+    当数据不再需要切分的时候本函数负责生成叶节点的模型
+    :param dataSet:
+    :return:
+    '''
+    # 调用linearSolve并返回回归系数ws
+    ws, X, Y = linearSolve(dataSet)
+    return ws
+
+
+def modelErr(dataSet):
+    '''
+    在给定的数据集上计算误差,本函数在数据集上调用linearSolve,返回yHat和Y之间的平方误差
+    :param dataSet:
+    :return:
+    '''
+    ws, X, Y = linearSolve(dataSet)
+    yHat = X * ws
+    return sum(power(Y - yHat, 2))
+
+
+def regTreeEval(model, inDat):
+    '''
+    对回归树叶节点进行预测
+    :param model:
+    :param inDat:
+    :return:
+    '''
+    return float(model)
+
+
+def modelTreeEval(model, inDat):
+    '''
+    对模型树节点进行预测,本函数会对输入数据进行格式化处理,在原数据矩阵上增加第0列,然后计算并返回预测值
+    :param model:
+    :param inDat:
+    :return:
+    '''
+    n = shape(inDat)[1]
+    X = mat(ones((1, n + 1)))
+    X[:, 1:n + 1] = inDat
+    return float(X * model)
+
+
+def treeForeCast(tree, inData, modelEval=regTreeEval):
+    '''
+    在给定树结构的情况下,对于单个数据点,该函数会给出一个预测值
+    本函数自上而下遍历整颗树,直到命中叶节点为止,一旦到达叶节点,
+    就会在输入数据上调用modelEval函数,而该函数的默认值是regTreeEval
+    注意:调用本函数时,需要指定树的类型,以便在叶节点上能够调用合适的模型
+    :param tree:
+    :param inData:
+    :param modelEval: 对叶节点数据进行预测的函数的引用
+    :return:
+    '''
+    if not isTree(tree): return modelEval(tree, inData)
+    if inData[tree['spInd']] > tree['spVal']:
+        if isTree(tree['left']):
+            return treeForeCast(tree['left'], inData, modelEval)
+        else:
+            return modelEval(tree['left'], inData)
+    else:
+        if isTree(tree['right']):
+            return treeForeCast(tree['right'], inData, modelEval)
+        else:
+            return modelEval(tree['right'], inData)
+
+
+def createForeCast(tree, testData, modelEval=regTreeEval):
+    '''
+    以向量形式返回一组预测值
+    :param tree:
+    :param testData:
+    :param modelEval:
+    :return:
+    '''
+    m = len(testData)
+    yHat = mat(zeros((m, 1)))
+    for i in range(m):
+        yHat[i, 0] = treeForeCast(tree, mat(testData[i]), modelEval)
+    return yHat
