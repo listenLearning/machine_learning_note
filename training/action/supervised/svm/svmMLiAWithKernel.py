@@ -277,7 +277,7 @@ def testRbf(k1=1.3):
     # 将核函数的类型设置为'rbf'
     kTup = ('rbf', k1)
     # 从文件中读入数据集
-    dataArr, labelArr = loadDataSet('../../data/svm/testSetRBF.txt')
+    dataArr, labelArr = loadDataSet('../../../../data/svm/testSetRBF.txt')
     # 运行SMO算法
     b, alphas = smoP(dataArr, labelArr, 200, 0.0001, 10000, kTup)
     # 建立了数据的矩阵副本,并找出非零的alpha值,从而得到所需要的支持向量
@@ -299,7 +299,7 @@ def testRbf(k1=1.3):
         # 判断预测值与实际值是否相等,不想等errorCount+1
         if sign(predict) != sign(labelArr[i]): errorCount += 1
     print('the training error rate is :%f' % float(errorCount / m))
-    dataArr, labelArr = loadDataSet('../../data/svm/testSetRBF2.txt')
+    dataArr, labelArr = loadDataSet('../../../../data/svm/testSetRBF2.txt')
     errorCount = 0
     dataMat = mat(dataArr)
     labelMat = mat(labelArr).T
