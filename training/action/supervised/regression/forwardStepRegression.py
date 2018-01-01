@@ -3,8 +3,7 @@ __coding__ = "utf-8"
 __author__ = " Ng WaiMing "
 
 from numpy import *
-from matplotlib import pyplot as plt
-from training.regression import regression
+from training.action.regression import regression
 
 
 def regularize(xMat):
