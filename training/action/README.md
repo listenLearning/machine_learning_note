@@ -1,17 +1,19 @@
 ## 代码阅读顺序
-- 0.numpy基础入门
-	- training/numpy_common_api/*
-- 1.k-近邻算法
-	- training/kNearestNeighbor/KNN.py
-- 2.决策树
-	- training/decisionTree/trees.py
-- 3.基于概率论的分类方法:朴素贝叶斯
-	- training/bayes/*
-- 4.Logistic回归
-	- training/logistic/*
-- 5.支持向量机(svm)
-	- training/svm/*
-- 7.利用AdaBoost元算法提高分类性能
-    - training/AdaBoost/*
-- 8.线性回归,局部加权线性回归,岭回归和逐步线性回归
-    - training/regression/*
+- 有监督学习
+    - 1.k-近邻算法
+	    - training/action/supervised/kNearestNeighbor/KNN.py
+    - 2.决策树
+	    - training/action/supervised/decisionTree/trees.py
+    - 3.基于概率论的分类方法:朴素贝叶斯
+	    - training/action/supervised/bayes/*
+    - 4.Logistic回归
+	    - training/action/supervised/logistic/*
+    - 5.支持向量机(svm)
+	    - training/action/supervised/svm/*
+    - 7.利用AdaBoost元算法提高分类性能
+        - training/action/supervised/AdaBoost/*
+    - 8.线性回归,局部加权线性回归,岭回归和逐步线性回归
+        - training/action/supervised/regression/*
+    - 9.树回归
+        - training/action/supervised/regression
+- 无监督学习
