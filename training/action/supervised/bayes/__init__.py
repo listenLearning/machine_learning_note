@@ -2,7 +2,7 @@
 __coding__ = "utf-8"
 __author__ = " Ng WaiMing "
 
-from training.bayes import Bayes
+from training.action.supervised.bayes import Bayes
 import feedparser
 
 if __name__ == "__main__":
