@@ -17,3 +17,7 @@
     - 8.树回归
         - training/action/supervised/regression
 - 无监督学习
+    - 1.利用K-Means对未标注数据分组
+        - training/action/unsupervised/kMeans/*
+    - 2.使用Apriori算法进行关联分析
+        - training/action/unsupervised/Apriori/*
