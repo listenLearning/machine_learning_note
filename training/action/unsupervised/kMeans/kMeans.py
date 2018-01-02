@@ -107,5 +107,5 @@ def kMeans(dataSet, k, distMeas=distEclud, createCent=randCent):
             ptsInClust = dataSet[nonzero(clusterAssment[:, 0].A == cent)[0]]
             # 计算所有点的均值,axis=0表示沿矩阵的列方向进行均值计算
             centroids[cent, :] = mean(ptsInClust, axis=0)
-    # 返回所有的类质心雨点分配结果
+    # 返回所有的类质心与点分配结果
     return centroids, clusterAssment
