@@ -138,3 +138,81 @@ def apriori(dataSet, minSupport=0.5):
         k += 1
     # 当LK为空时,程序返回L并退出
     return L, supportData
+
+
+def generateRules(L, supportData, minConf=0.7):
+    '''
+    生成一个包含可信度的规则列表,后面可以基于可信度对他们进行排序
+    :param L: 频繁项集列表
+    :param supportData: 包含频繁项集支持数据的字典
+    :param minConf: 最小可信度阈值
+    :return:
+    '''
+    # 初始化一个空的规则列表
+    bigRuleList = []
+    # 遍历L中的每一个频繁项集
+    for i in range(1, len(L)):
+        # 获取频繁项集中每个组合的所有元素
+        for freqSet in L[i]:
+            # 对每一个频繁项集创建只包含单个元素集合的列表H1
+            H1 = [frozenset([item]) for item in freqSet]
+            if (i > 1):
+                # 如果当前项集的元素数目超过2,调用rulesFromConSeq函数对它做进一步合并
+                rulesFromConSeq(freqSet, H1, supportData, bigRuleList, minConf)
+            else:
+                # 如果当前项集的元素数目只有2,调用calcConf来计算可信度值
+                calcConf(freqSet, H1, supportData, bigRuleList, minConf)
+    # 返回规则列表
+    return bigRuleList
+
+
+def calcConf(freqSet, H, supportData, bigRuleList, minConf=0.7):
+    '''
+    计算规则的可信度以及找到满足最小可信度要求的规则
+    :param freqSet:
+    :param H:
+    :param supportData:
+    :param bigRuleList:
+    :param minConf:
+    :return:
+    '''
+    # 初始化一个空列表prunedH
+    prunedH = []
+    # 遍历列表H中的所有项集
+    for conseq in H:
+        # 计算可信度值,依照规则support(P|H)/support(P)
+        # supportData[freqSet - conseq],因为supportData中的key是frozenset,所以相减求差值
+        conf = supportData[freqSet] / supportData[freqSet - conseq]
+        # 判断可信度值是否满足最小可信度值
+        if conf >= minConf:
+            print(freqSet - conseq, '-->', conseq, 'conf:', conf)
+            # 对列表bigRuleList进行填充,bigRuleList是前面通过检查的bigRuleList
+            bigRuleList.append((freqSet - conseq, conseq, conf))
+            # 将通过检查的规则填充到规则列表中
+            prunedH.append(conseq)
+    # 返回满足最小可信度要求的规则列表
+    return prunedH
+
+
+def rulesFromConSeq(freqSet, H, supportData, bigRuleList, minConf=0.7):
+    '''
+    生成候选规则集合
+    :param freqSet:
+    :param H:
+    :param supportData:
+    :param bigRuleList:
+    :param minConf:
+    :return:
+    '''
+    # 计算H中的频繁集大小m
+    m = len(H[0])
+    # 查看该频繁项集是否大到可以移除大小为M的子集,如果可以,则将其移除
+    if (len(freqSet) > (m + 1)):
+        # 调用aprioriGen来生成H中的元素的无重复组合,并将结果存储在Hmp1
+        # Hmp1也是下次迭代的H列表,Hmp1中包含所有可能的规则
+        Hmp1 = aprioriGen(H, m + 1)
+        # 调用calcConf函数来测试它们的可信度已确定规则是否满足要求
+        Hmp1 = calcConf(freqSet, Hmp1, supportData, bigRuleList, minConf)
+        # 如果不止一条规则满足要求,那么使用Hmp1迭代调用函数rulesFromConSeq来判断是否可以进一步组合这些规则
+        if (len(Hmp1) > 1):
+            rulesFromConSeq(freqSet, Hmp1, supportData, bigRuleList, minConf)
