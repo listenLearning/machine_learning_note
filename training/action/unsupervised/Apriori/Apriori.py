@@ -76,29 +76,65 @@ def scanD(D, Ck, minSupport):
 
 
 def aprioriGen(Lk, k):
+    '''
+    计算候选项集ck
+    :param Lk: 频繁项集列表
+    :param k: 项集元素个数
+    :return:
+    '''
+    # 初始化一个空列表
     retList = []
+    # 计算Lk中的元素数目
     lenLk = len(Lk)
+    # 循环遍历lk中的所有元素
     for i in range(lenLk):
         for j in range(i + 1, lenLk):
+            # 获取索引下标为i的集合的前k-2个元素
             L1 = list(Lk[i])[: k - 2]
+            # print('i%d:k:%d,k-2:%d '%(i,k,k-2),' Lk: ',Lk,' Lk[i]: ',Lk[i],' L1: ',L1)
+            # 获取索引下标为i的集合的前k-2个元素
             L2 = list(Lk[j])[: k - 2]
+            # print('j%d:k:%d,k-2:%d ' % (j, k, k - 2), ' Lk: ', Lk, ' Lk[j]: ', Lk[j], ' L2: ', L2)
+            # 将L1L2排序,方便比较两个列表是否相等
             L1.sort()
             L2.sort()
+            # 如果L1与L2的前K-2个元素都相等
             if L1 == L2:
+                # 将这两个集合合并成一个大小为k的集合
+                # 集合的合并操作在python中对应操作符|
                 retList.append(Lk[i] | Lk[j])
+    # 返回元素两两合并的数据集
     return retList
 
 
 def apriori(dataSet, minSupport=0.5):
+    '''
+    生成候选项集的列表
+    :param dataSet: 数据集
+    :param minSupport: 支持度
+    :return:
+    '''
+    # 调用createC1创建C1
     C1 = createC1(dataSet)
+    # 读入数据集将其转化为D(集合列表)
     D = [set(x) for x in dataSet]
+    # 调用scanD函数来创建一个包含满足最小支持度要求的集合L1,
+    # 并将L1放入到列表L中,L会包含L1,L2,L3...
     L1, supportData = scanD(D, C1, minSupport)
     L = [L1]
     k = 2
+    # 通过while循环创建包含更大项集的更大列表,直到下一个大的项集为空
     while (len(L[k - 2]) > 0):
+        # 调用aprioriGen计算候选项集Ck
         Ck = aprioriGen(L[k - 2], k)
+        # 使用scanD函数基于Ck来创建LK,Ck是一个候选项集列表
+        # scanD会遍历Ck,丢掉不满足最小支持度要求的项集
         Lk, supK = scanD(D, Ck, minSupport)
+        # 更新候选项和对应的支持度
         supportData.update(supK)
+        # 将Lk列表添加到L
         L.append(Lk)
+        # 增加k的值,重复遍历
         k += 1
+    # 当LK为空时,程序返回L并退出
     return L, supportData
