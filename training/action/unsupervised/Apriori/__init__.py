@@ -14,4 +14,4 @@ if __name__ == '__main__':
     # print('L1: \n', L1, '\n')
     # print('suppData0: \n', suppData0, '\n')
     L,supportData =Apriori.apriori(dataSet)
-    print(L)
+    print(Apriori.aprioriGen(L[0],2))
