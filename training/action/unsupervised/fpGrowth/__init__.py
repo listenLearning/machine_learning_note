@@ -13,8 +13,10 @@ if __name__ == '__main__':
     # rootNode.children['phoenix'] = fpGrowth.treeNode('phoenix', 3, None)
     # rootNode.disp()
     simpDat = fpGrowth.loadSimpDat()
-    # print(simpDat)
     initSet = fpGrowth.createInitSet(simpDat)
-    # print(initSet)
     myFPtree, myHeaderTab = fpGrowth.createTree(initSet, 3)
-    myFPtree.disp()
+    # myFPtree.disp()
+    # print(fpGrowth.findPrefixPath('x',myHeaderTab['x'][1]))
+    freqItem = []
+    # fpGrowth.mineTree(myFPtree, myHeaderTab, 3, set([]), freqItem)
+    fpGrowth.sort(myHeaderTab)
