@@ -144,3 +144,72 @@ def createInitSet(dataSet):
     for trans in dataSet:
         retDict[frozenset(trans)] = 1
     return retDict
+
+
+def ascendTree(leafNode, prefixPath):
+    '''
+    上溯FP-tree
+    :param leafNode:
+    :param prefixPath:
+    :return:
+    '''
+    # 检查当前节点的父节点是否为空
+    if leafNode.parent != None:
+        # 如果不为空,就将当前节点的名字添加到prefixPath中
+        prefixPath.append(leafNode.name)
+        # 递归调用ascendTree函数直到当前节点没有上一级父节点
+        ascendTree(leafNode.parent, prefixPath)
+
+
+def findPrefixPath(basePat, treeNode):
+    '''
+    发现以给定元素项结尾的所有路径的函数
+    :param basePat:
+    :param treeNode:
+    :return:
+    '''
+    # 创建一个空字典,用于放置条件模式基
+    condPats = {}
+    # 遍历链表,直到达到链尾
+    while treeNode != None:
+        # 创建一个空列表,用于放置前缀路径
+        prefixPath = []
+        # 调用ascendTree函数上溯fp树
+        ascendTree(treeNode, prefixPath)
+        # 如果前缀路径长度大于1
+        # 此处主要是为了避免前缀路径中只有单独一个元素,添加了空节点
+        if len(prefixPath) > 1:
+            # 对非basePat的倒叙值作为key,赋值为count数
+            condPats[frozenset(prefixPath[1:])] = treeNode.count
+        # 递归，寻找改节点的下一个 相同值的链接节点
+        treeNode = treeNode.nodeLink
+    return condPats
+
+
+def mineTree(inTree, headerTable, minSup, preFix, freqItemList):
+    '''
+    递归查找频繁项集
+    :param inTree:
+    :param headerTable:
+    :param minSup:
+    :param preFix:
+    :param freqItemList:
+    :return:
+    '''
+    # 对头指针表中的元素按照其出现频率进行排序
+    bigL = [v[0] for v in sorted(headerTable.items(),
+                                 key=operator.itemgetter(1))]
+    # 循环遍历最频繁项集的key,从小到大的递归寻找对应的频繁项集
+    for basePat in bigL:
+        # preFix为newFreqSet上一次的存储记录,一旦没有myHead,就不会更新
+        newFreqSet = preFix.copy()
+        newFreqSet.add(basePat)
+        # 将每一个频繁项添加到频繁项集列表freqItemList中
+        freqItemList.append(newFreqSet)
+        # 调用findPrefixPath函数来创建条件基
+        condPattBases = findPrefixPath(basePat, headerTable[basePat][1])
+        # 将条件基传输给createTree函数,创建新的fp树以及头指针列表
+        myCondTree, myHead = createTree(condPattBases, minSup)
+        if myHead != None:
+            # 递归调用mineTree函数,直到fp树中没有元素项
+            mineTree(myCondTree, myHead, minSup, newFreqSet, freqItemList)
