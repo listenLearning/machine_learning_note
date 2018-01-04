@@ -3,6 +3,7 @@ __coding__ = "utf-8"
 __author__ = "Ng WaiMing"
 
 import operator
+import json
 
 
 class treeNode:
@@ -33,7 +34,7 @@ class treeNode:
         :param ind:
         :return:
         '''
-        print(' ' * ind, self.name, '   ', self.count)
+        print('  ' * ind, self.name, ' ', self.count)
         for child in self.children.values():
             child.disp(ind + 1)
 
@@ -51,8 +52,8 @@ def createTree(dataSet, minSup=1):
     for trans in dataSet:
         for item in trans:
             headerTable[item] = headerTable.get(item, 0) + dataSet[trans]
-    # 遍历头指针表,清除小于最小支持度的数据
-    # 字典在遍历时不能进行修改,所以此处转换成List
+        # 遍历头指针表,清除小于最小支持度的数据
+        # 字典在遍历时不能进行修改,所以此处转换成List
     for k in list(headerTable.keys()):
         if headerTable[k] < minSup:
             del (headerTable[k])
@@ -78,10 +79,9 @@ def createTree(dataSet, minSup=1):
         if len(localD) > 0:
             # 1.将localD中的元素进行排序
             # 2.将排序后的localD循环遍历并取出其中的元素项集放置到列表orderItems中
-            orderItems = [v[0] for v in sorted(localD.items(),
-                                               key=operator.itemgetter(1), reverse=True)]
+            orderedItems = [v[0] for v in sorted(localD.items(), key=lambda p: p[1], reverse=True)]
             # 填充数,通过有序的orderItems的第一位,进行顺序填充第一层的子节点
-            updateTree(orderItems, retTree, headerTable, count)
+            updateTree(orderedItems, retTree, headerTable, count)
     # 返回树以及头指针表
     return retTree, headerTable
 
@@ -128,6 +128,9 @@ def updateHeader(nodeToTest, targetNode):
         nodeToTest = nodeToTest.nodeLink
     nodeToTest.nodeLink = targetNode
 
+def sort(headerTable):
+    for key,value in headerTable.items():
+        print(type(value[1]))
 
 def loadSimpDat():
     simpDat = [['r', 'z', 'h', 'j', 'p'],
@@ -197,8 +200,7 @@ def mineTree(inTree, headerTable, minSup, preFix, freqItemList):
     :return:
     '''
     # 对头指针表中的元素按照其出现频率进行排序
-    bigL = [v[0] for v in sorted(headerTable.items(),
-                                 key=operator.itemgetter(1))]
+    bigL = [v[0] for v in sorted(headerTable.items(), key=lambda p: p[1])]
     # 循环遍历最频繁项集的key,从小到大的递归寻找对应的频繁项集
     for basePat in bigL:
         # preFix为newFreqSet上一次的存储记录,一旦没有myHead,就不会更新
@@ -211,5 +213,7 @@ def mineTree(inTree, headerTable, minSup, preFix, freqItemList):
         # 将条件基传输给createTree函数,创建新的fp树以及头指针列表
         myCondTree, myHead = createTree(condPattBases, minSup)
         if myHead != None:
+            print('conditional tree for:', newFreqSet)
+            myCondTree.disp(1)
             # 递归调用mineTree函数,直到fp树中没有元素项
             mineTree(myCondTree, myHead, minSup, newFreqSet, freqItemList)
