@@ -40,7 +40,7 @@ class treeNode:
 
 def createTree(dataSet, minSup=1):
     '''
-
+    创建FP树以及头指针表
     :param dataSet: 数据集
     :param minSup: 最小支持度
     :return:
@@ -60,35 +60,70 @@ def createTree(dataSet, minSup=1):
     freqItemSet = set(headerTable.keys())
     # 如果所有项都不频繁,那么就不需要下一步操作
     if len(freqItemSet) == 0: return None, None
+    # 扩展headerTable,将headerTable格式化为dict{key:[count,None]}
     for k in headerTable:
         headerTable[k] = [headerTable[k], None]
+    # 初始化父节点,即创建一个空集,用于装载频繁项集
     retTree = treeNode('Null Set', 1, None)
+    # 遍历数据集中的所有数据,取得所有元素及其对应的出现次数
     for tranSet, count in dataSet.items():
+        # 初始化一个空字典
         localD = {}
+        # 循环遍历所有的元素项
         for item in tranSet:
+            # 如果当前元素出现在集合freqItemSet中,就将当前元素及其出现的次数加载到localD
             if item in freqItemSet:
                 localD[item] = headerTable[item][0]
+        # 如果字典localD的长度大于0,即当前字典不是一个空字典
         if len(localD) > 0:
+            # 1.将localD中的元素进行排序
+            # 2.将排序后的localD循环遍历并取出其中的元素项集放置到列表orderItems中
             orderItems = [v[0] for v in sorted(localD.items(),
                                                key=operator.itemgetter(1), reverse=True)]
+            # 填充数,通过有序的orderItems的第一位,进行顺序填充第一层的子节点
             updateTree(orderItems, retTree, headerTable, count)
+    # 返回树以及头指针表
     return retTree, headerTable
 
 
 def updateTree(items, inTree, headerTable, count):
+    '''
+    更新FP-tree
+    :param items: 排序后的列表
+    :param inTree: fp树
+    :param headerTable: 头指针表
+    :param count: 元素出现的次数
+    :return:
+    '''
+    # 测试事务中的第一个元素是否作为子节点存在,
     if items[0] in inTree.children:
+        # 如果存在的话,则更新该元素项的计数
         inTree.children[items[0]].inc(count)
     else:
+        # 如果不存在,则创建一个treeNode并将其作为一个子节点添加到树中
         inTree.children[items[0]] = treeNode(items[0], count, inTree)
+        # 检查当前头指针表的子节点是否为None
         if headerTable[items[0]][1] == None:
+            # 如果是,就将上面的元素设置为当前头指针表节点的子节点
             headerTable[items[0]][1] = inTree.children[items[0]]
         else:
+            # 如果不是,就调用updateHeader,将头指针表更新以指向新的节点
             updateHeader(headerTable[items[0]][1], inTree.children[items[0]])
     if len(items) > 1:
+        # 迭代调用本函数,每次调用时都会去掉列表中的第一个元素,直到当前没有元素为止
+        # items[1::]通过切片取出除头元素的所有元素
         updateTree(items[1::], inTree.children[items[0]], headerTable, count)
 
 
 def updateHeader(nodeToTest, targetNode):
+    '''
+    更新头指针,建立相同元素间的关系
+    从头指针的nodeLink开始,一直沿着nodeLink直到到达链表末尾,
+    如果链表很长,可能会遇到迭代调用的次数限制
+    :param nodeToTest: 满足最小支持度的字典
+    :param targetNode: Tree对象的子节点
+    :return:
+    '''
     while (nodeToTest.nodeLink != None):
         nodeToTest = nodeToTest.nodeLink
     nodeToTest.nodeLink = targetNode
