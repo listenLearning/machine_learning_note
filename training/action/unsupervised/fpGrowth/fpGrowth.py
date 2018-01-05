@@ -4,6 +4,9 @@ __author__ = "Ng WaiMing"
 
 import operator
 import json
+from time import sleep
+import twitter
+import re
 
 
 class treeNode:
@@ -128,9 +131,6 @@ def updateHeader(nodeToTest, targetNode):
         nodeToTest = nodeToTest.nodeLink
     nodeToTest.nodeLink = targetNode
 
-def sort(headerTable):
-    for key,value in headerTable.items():
-        print(type(value[1]))
 
 def loadSimpDat():
     simpDat = [['r', 'z', 'h', 'j', 'p'],
@@ -200,7 +200,7 @@ def mineTree(inTree, headerTable, minSup, preFix, freqItemList):
     :return:
     '''
     # 对头指针表中的元素按照其出现频率进行排序
-    bigL = [v[0] for v in sorted(headerTable.items(), key=lambda p: p[1])]
+    bigL = [v[0] for v in sorted(headerTable.items(), key=lambda p: p[1][0])]
     # 循环遍历最频繁项集的key,从小到大的递归寻找对应的频繁项集
     for basePat in bigL:
         # preFix为newFreqSet上一次的存储记录,一旦没有myHead,就不会更新
@@ -217,3 +217,41 @@ def mineTree(inTree, headerTable, minSup, preFix, freqItemList):
             myCondTree.disp(1)
             # 递归调用mineTree函数,直到fp树中没有元素项
             mineTree(myCondTree, myHead, minSup, newFreqSet, freqItemList)
+
+
+# 无法连接twitter,所以不做运行
+# def getLotsOfTweets(searchStr):
+#     CONSUMER_KEY = ''
+#     CONSUMER_SECRET = ''
+#     ACCESS_TOKEN_KEY = ''
+#     ACCESS_TOKEN_SECRET = ''
+#     api = twitter.Api(consumer_key=CONSUMER_KEY,
+#                       consumer_secret=CONSUMER_SECRET,
+#                       access_token_key=ACCESS_TOKEN_KEY,
+#                       access_token_secret=ACCESS_TOKEN_SECRET)
+#     resultsPages = []
+#     for i in range(1, 15):
+#         print('fetching page %d' % i)
+#         searchResult = api.GetSearch(searchStr, per_page=100, page=i)
+#         resultsPages.append(searchResult)
+#         sleep(6)
+#     return resultsPages
+#
+#
+# def textParse(bigString):
+#     urlsRemoved = re.sub('(https[s]?:[/][/]|www.)'
+#                          '([a-z]|[A-Z]|[0-9]|[/.]|[~])*', '', bigString)
+#     listOfTokens = re.split(r'\W*', urlsRemoved)
+#     return [tok.lower() for tok in listOfTokens if len(tok) > 2]
+#
+#
+# def mineTweets(tweetArr, minSup=5):
+#     parsedList = []
+#     for i in range(14):
+#         for j in range(100):
+#             parsedList.append(textParse(tweetArr[i][j].text))
+#     initStr = createInitSet(parsedList)
+#     myFPtree, myHeaderTable = createTree(initStr, minSup)
+#     myFreqList = []
+#     mineTree(myFPtree, myHeaderTable, minSup, set([]), myFreqList)
+#     return myFreqList
