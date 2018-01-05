@@ -2,13 +2,6 @@
 __coding__ = "utf-8"
 __author__ = "Ng WaiMing"
 
-import operator
-import json
-from time import sleep
-import twitter
-import re
-
-
 class treeNode:
     def __init__(self, nameValue, numOccur, parentNode):
         # 用于存放节点名字
@@ -218,7 +211,11 @@ def mineTree(inTree, headerTable, minSup, preFix, freqItemList):
             # 递归调用mineTree函数,直到fp树中没有元素项
             mineTree(myCondTree, myHead, minSup, newFreqSet, freqItemList)
 
-
+# import operator
+# import json
+# from time import sleep
+# import twitter
+# import re
 # 无法连接twitter,所以不做运行
 # def getLotsOfTweets(searchStr):
 #     CONSUMER_KEY = ''
