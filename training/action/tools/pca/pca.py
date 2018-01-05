@@ -62,12 +62,22 @@ def pca(datMat, topNfeat=9999999):
 
 
 def replaceNanWithMean(fileName):
+    '''
+    将Nan替换成平均值
+    :param fileName:
+    :return:
+    '''
+    # 打开文件并计算特征数
     dataMat = loadDataSet(fileName, ' ')
     numFeat = shape(dataMat)[1]
+    # 在所有的特征上进行循环
     for i in range(numFeat):
+        # 对于每个特征,首先计算出每列非Nan的平均值
         # dataMat[:, i].A将matrix转换成array
         meanVal = mean(dataMat[nonzero(~isnan(dataMat[:, i].A))[0], i])
+        # 将所有Nan替换成平均值
         dataMat[nonzero(isnan(dataMat[:, i].A))[0], i] = meanVal
+    # 返回数据集
     return dataMat
 
 
