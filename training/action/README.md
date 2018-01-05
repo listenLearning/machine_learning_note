@@ -1,25 +1,29 @@
 ## 代码阅读顺序
-- 有监督学习
-    - 1.k-近邻算法
-	    - training/action/supervised/kNearestNeighbor/KNN.py
-    - 2.决策树
-	    - training/action/supervised/decisionTree/trees.py
-    - 3.基于概率论的分类方法:朴素贝叶斯
-	    - training/action/supervised/bayes/*
-    - 4.Logistic回归
-	    - training/action/supervised/logistic/*
-    - 5.支持向量机(svm)
-	    - training/action/supervised/svm/*
-    - 6.利用AdaBoost元算法提高分类性能
-        - training/action/supervised/AdaBoost/*
-    - 7.线性回归,局部加权线性回归,岭回归和逐步线性回归
-        - training/action/supervised/regression/*
-    - 8.树回归
-        - training/action/supervised/regression
-- 无监督学习
-    - 1.利用K-Means对未标注数据分组
-        - training/action/unsupervised/kMeans/*
-    - 2.使用Apriori算法进行关联分析
-        - training/action/unsupervised/Apriori/*
-    - 3.使用FP-growth算法来高效发现频繁项集
-        - training/action/unsupervised/fpGrowth/*
+#### 有监督学习
+    1.k-近邻算法
+	    training/action/supervised/kNearestNeighbor/KNN.py
+    2.决策树
+	    training/action/supervised/decisionTree/trees.py
+    3.基于概率论的分类方法:朴素贝叶斯
+	    training/action/supervised/bayes/*
+    4.Logistic回归
+	    training/action/supervised/logistic/*
+    5.支持向量机(svm)
+	    training/action/supervised/svm/*
+    6.利用AdaBoost元算法提高分类性能
+        training/action/supervised/AdaBoost/*
+    7.线性回归,局部加权线性回归,岭回归和逐步线性回归
+        training/action/supervised/regression/*
+    8.树回归
+        training/action/supervised/regression
+#### 无监督学习
+    1.利用K-Means对未标注数据分组
+        training/action/unsupervised/kMeans/*
+    2.使用Apriori算法进行关联分析
+        training/action/unsupervised/Apriori/*
+    3.使用FP-growth算法来高效发现频繁项集
+        training/action/unsupervised/fpGrowth/*
+#### 其他常用工具
+    1.利用PCA来简化数据
+        training/action/tools/pca/*
+
