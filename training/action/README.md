@@ -21,3 +21,5 @@
         - training/action/unsupervised/kMeans/*
     - 2.使用Apriori算法进行关联分析
         - training/action/unsupervised/Apriori/*
+    - 3.使用FP-growth算法来高效发现频繁项集
+        - training/action/unsupervised/fpGrowth/*
