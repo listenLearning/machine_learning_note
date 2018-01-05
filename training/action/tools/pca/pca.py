@@ -65,6 +65,7 @@ def replaceNanWithMean(fileName):
     dataMat = loadDataSet(fileName, ' ')
     numFeat = shape(dataMat)[1]
     for i in range(numFeat):
+        # dataMat[:, i].A将matrix转换成array
         meanVal = mean(dataMat[nonzero(~isnan(dataMat[:, i].A))[0], i])
         dataMat[nonzero(isnan(dataMat[:, i].A))[0], i] = meanVal
     return dataMat
