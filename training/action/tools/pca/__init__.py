@@ -12,4 +12,7 @@ if __name__ == "__main__":
     # # print(shape(lowDMat))
     # pca.drawingWithMatplot(dataMat, reconMat)
     path = '../../../../data/PCA/secom.data'
-    pca.replaceNanWithMean(path)
+    dataMat = pca.replaceNanWithMean(path)
+    lowDMat, reconMat = pca.pca(dataMat, 6)
+    # print(lowDMat)
+    pca.drawingWithMatplot(dataMat,reconMat)
