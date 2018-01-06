@@ -26,4 +26,6 @@
 #### 其他常用工具
     1.利用PCA来简化数据
         training/action/tools/pca/*
+    2.利用SVD简化数据
+        training/action/tools/svd/*
 
