@@ -1,25 +1,25 @@
 ## 学习顺序
-- numpy ndarray对象
-- numpy数据类型
-- numpy数组属性
-- numpy数组创建例程
-- numpy来自现有数据的数组
-- numpy来自数值范围的数组
-- numpy切片和索引
-- numpy高级索引
-- numpy广播
-- numpy在数组上的迭代
-- numpy数组操作
-- numpy位操作
-- numpy字符串函数
-- numpy数学算数函数
-- numpy算术运算
-- numpy统计函数
-- numpy排序、搜索和计数函数
-- numpy字节交换
-- numpy副本和视图
-- numpy矩阵库
-- numpy线性代数
-- numpy matplotlib库
-- numpy使用matplotlib绘制直方图
-- numpy io文件操作
+<a href='./numpy_ndarray_object.py'>1.numpy ndarray对象</a>\
+<a href='./numpy_data_types.py'>2.numpy数据类型</a>\
+<a href='./numpy_array_attributes.py'>3.numpy数组属性</a>\
+<a href='./numpy_array_creation_routines.py'>4.numpy数组创建例程</a>\
+<a href='./numpy_array_from_existing_data.py'>5.numpy来自现有数据的数组</a>\
+<a href='./numpy_array_from_numerical_ranges.py'>6.numpy来自数值范围的数组</a>\
+<a href='./numpy_indexing_and_slicing.py'>7.numpy切片和索引</a>\
+<a href='./numpy_advanced_indexing.py'>8.numpy高级索引</a>\
+<a href='./numpy_broadcasting.py'>9.numpy广播</a>\
+<a href='./numpy_iterating_over_array.py'>10.numpy在数组上的迭代</a>\
+<a href='./numpy_array_manipulation.py'>11.numpy数组操作</a>\
+<a href='./numpy_binary_operators.py'>12.numpy位操作</a>\
+<a href='./numpy_string_functions.py'>13.numpy字符串函数</a>\
+<a href='./numpy_mathematical_functions.py'>14.numpy数学算数函数</a>\
+<a href='./numpy_arithmetic_operations.py'>15.numpy算术运算</a>\
+<a href='./numpy_statistical_functions.py'>16.numpy统计函数</a>\
+<a href='./numpy_sort_search_counting_functions.py'>17.numpy排序、搜索和计数函数</a>\
+<a href='./numpy_byte_swapping.py'>18.numpy字节交换</a>\
+<a href='./numpy_copies_and_views.py'>19.numpy副本和视图</a>\
+<a href='./numpy_matrix_library.py'>20.numpy矩阵库</a>\
+<a href='./numpy_linear_algebra.py'>21.numpy线性代数</a>\
+<a href='./numpy_matplotlib.py'>22.numpy matplotlib库</a>\
+<a href='./numpy_histogram_using_matplotlib.py'>23.numpy使用matplotlib绘制直方图</a>\
+<a href='./numpy_with_io.py'>24.numpy io文件操作</a>\
