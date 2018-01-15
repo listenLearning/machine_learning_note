@@ -9,15 +9,9 @@
 <a href='./supervised/regression'>7.线性回归,局部加权线性回归,岭回归和逐步线性回归</a>\
 <a href='./supervised/CART'>8.树回归</a>
 #### 无监督学习
-    1.利用K-Means对未标注数据分组
-        training/action/unsupervised/kMeans/*
-    2.使用Apriori算法进行关联分析
-        training/action/unsupervised/Apriori/*
-    3.使用FP-growth算法来高效发现频繁项集
-        training/action/unsupervised/fpGrowth/*
+<a href='./unsupervised/kMeans/'>9.利用K-Means对未标注数据分组</a>\
+<a href='./unsupervised/Apriori/'>10.使用Apriori算法进行关联分析</a>\
+<a href='./unsupervised/fpGrowth/'>11.使用FP-growth算法来高效发现频繁项集</a>
 #### 其他常用工具
-    1.利用PCA来简化数据
-        training/action/tools/pca/*
-    2.利用SVD简化数据
-        training/action/tools/svd/*
-
+<a href='./tools/pca/'>12.利用PCA来简化数据</a>\
+<a href='./tools/svd/'>13.利用SVD简化数据</a>
